@@ -12,7 +12,7 @@ function user(previousState = initState,action){
   switch(action.type){
     case AUTH_ASSCESS:
       console.log(action.data)
-      return {...action.data,redirectTo:getRedirectPath(action.data.type)};
+      return {...action.data,redirectTo:getRedirectPath(action.data.type,action.data.header)};
     case AUTH_ERROR:
       return {...initState,...action.data}
     default:

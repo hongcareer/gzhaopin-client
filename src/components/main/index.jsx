@@ -1,10 +1,14 @@
 import React,{Component} from 'react';
 import {Route} from 'react-router-dom';
-import Bossinfo from '../boss-info'
+import Bossinfo from '../boss-info';
+import Consumerinfo from '../consumer-info'
 class Main extends Component{
   render(){
     return(
-      <Route path='/bossinfo' component={Bossinfo}/>
+      <div>
+        <Route path='/bossinfo' component={Bossinfo}/>
+        <Route path='/consumerinfo' component={Consumerinfo}/>
+      </div>
     )
   }
 };

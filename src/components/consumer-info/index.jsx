@@ -1,13 +1,11 @@
 import React,{Component} from 'react';
 import {NavBar,InputItem,TextareaItem,Button} from 'antd-mobile';
 import HeaderSelector from '../header-selsector'
-class Bossinfo extends Component{
+class Consumerinfo extends Component{
   state={
     header:'',
-    info:'',
     post:'',
-    company:'',
-    salary:''
+    introduce:''
   };
   handleChange = (type,val) =>{
     this.setState({
@@ -24,14 +22,12 @@ class Bossinfo extends Component{
       <div>
         <NavBar>Boss信息完善</NavBar>
         <HeaderSelector updateHeader={this.updateHeader}/>
-        <InputItem onChange={val => {this.handleChange('post', val)}}>招聘职位:</InputItem>
-        <InputItem onChange={val => {this.handleChange('company', val)}}>公司名称:</InputItem>
-        <InputItem onChange={val => {this.handleChange('salary', val)}}>职位薪资:</InputItem>
-        <TextareaItem title="职位要求:" rows={3} onChange={val => {this.handleChange('info', val)}}/>
+        <InputItem onChange={val => {this.handleChange('post', val)}}>求职岗位:</InputItem>
+        <TextareaItem title="个人介绍:" rows={3} onChange={val => {this.handleChange('info', val)}}/>
         <Button type='warning'>保存</Button>
       </div>
 
     )
   }
 };
-export default Bossinfo;
+export default Consumerinfo;
