@@ -4,7 +4,7 @@ import {Provider} from 'react-redux'
 import {HashRouter,Link,Switch,Route} from 'react-router-dom';
 import Login from './components/login';
 import Main from './components/main';
-import Register from './components/register';
+import Register from './containers/register';
 import store from './redux/store';
 
 ReactDOM.render(
