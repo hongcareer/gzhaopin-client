@@ -5,19 +5,32 @@ const initState ={
   username: '',
   _id: '',
   type: '',
-  errMsg:''
+  errMsg:'',
+  redirectTo:''
 }
 function user(previousState = initState,action){
   switch(action.type){
     case AUTH_ASSCESS:
-      return action.data;
+      console.log(action.data)
+      return {...action.data,redirectTo:getRedirectPath(action.data.type)};
     case AUTH_ERROR:
       return {...initState,...action.data}
     default:
       return previousState;
   }
 };
-
+function getRedirectPath(type,header){
+  let path = '';
+  if(type === 'boss'){
+    path='/boss'
+  }else{
+    path='/consumer'
+  };
+  if(!header){
+    path+='info'
+  }
+  return path;
+}
 function Yyy(previousState = 0,action){
   switch(action.type){
     // case 'YYYY':

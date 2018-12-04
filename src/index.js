@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux'
 import {HashRouter,Link,Switch,Route} from 'react-router-dom';
-import Login from './components/login';
+import Login from './containers/login';
 import Main from './components/main';
 import Register from './containers/register';
 import store from './redux/store';
@@ -13,7 +13,7 @@ ReactDOM.render(
       <Switch>
         <Route path='/login' component={Login}/>
         <Route path='/register' component={Register}/>
-        <Route path='/main' component={Main}/>
+        <Route path='/' component={Main}/>
       </Switch>
     </HashRouter>
   </Provider>,

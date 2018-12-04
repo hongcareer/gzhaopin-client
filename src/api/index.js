@@ -1,5 +1,7 @@
 
 import ajax from './ajax';
 const prefix = '';
-const reqRegister = data => ajax(`${prefix}/register`,data,'POST');
-export default reqRegister;
+export const reqRegister = data => ajax(`${prefix}/register`,data,'POST');
+export const reqLogin = data => ajax(`${prefix}/login`,data,'POST');
+
+
