@@ -18,7 +18,7 @@ class Login extends Component{
   };
   goLogin = ()=>{
     const {username,password} = this.state;
-    console.log(this.props.login({username, password}));;
+    this.props.login({username, password});;
   }
   render(){
     const {errMsg,redirectTo} = this.props.user;

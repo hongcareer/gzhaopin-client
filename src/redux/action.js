@@ -1,6 +1,6 @@
 import {AUTH_ASSCESS,AUTH_ERROR} from './action-list';
 
-import {reqRegister,reqLogin,reqUpdata} from '../api';
+import {reqRegister,reqLogin,reqUpdata,reqUser} from '../api';
 const authAsscess = (data)=> ({type:AUTH_ASSCESS,data:data});
 const authError = (data)=> ({type:AUTH_ERROR,data:data});
 
@@ -85,3 +85,23 @@ export const updata = ({header,info,post,company,salary,type})=>{
       })
   }
 }
+
+//获取数据库中请求用户的信息
+export const getuser = () =>{
+  return dispatch=>{
+    reqUser()
+      .then(({data})=>{
+        if(data.code === 0){
+          console.log(data.data)
+          dispatch(authAsscess(data.data))
+        }else{
+          dispatch(authError({errMsg:data.data}))
+        }
+      })
+      .catch(err =>{
+        dispatch(authError({errMsg:"网络不稳定，请刷新试试"}))
+      })
+  }
+}
+
+//获取用户列表
