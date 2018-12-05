@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import {NavBar,InputItem,WhiteSpace,WingBlank,List,Button} from 'antd-mobile';
 import Logo from '../logo/index';
 import './index.less'
+import {Redirect} from "react-router-dom";
 class Login extends Component{
   state={
     username: '',
@@ -20,7 +21,11 @@ class Login extends Component{
     console.log(this.props.login({username, password}));;
   }
   render(){
-    const {errMsg} = this.props.user;
+    const {errMsg,redirectTo} = this.props.user;
+    // console.log(errMsg);
+    if(redirectTo){
+      return <Redirect to={redirectTo}/>
+    }
     return(
       <div>
         <NavBar>Red & Wine</NavBar>

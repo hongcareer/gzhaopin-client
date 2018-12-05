@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import {Route} from 'react-router-dom';
-import Bossinfo from '../boss-info';
-import Consumerinfo from '../consumer-info'
+import Bossinfo from '../../containers/boss-info';
+import Consumerinfo from '../../containers/consumer-info';
 class Main extends Component{
   render(){
     return(

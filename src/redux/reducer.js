@@ -6,7 +6,12 @@ const initState ={
   _id: '',
   type: '',
   errMsg:'',
-  redirectTo:''
+  redirectTo:'',
+  header:'',
+  info:'',
+  salary:'',
+  post:'',
+  company:''
 }
 function user(previousState = initState,action){
   switch(action.type){
@@ -22,12 +27,12 @@ function user(previousState = initState,action){
 function getRedirectPath(type,header){
   let path = '';
   if(type === 'boss'){
-    path='/boss'
+    path='/boss';
   }else{
-    path='/consumer'
+    path='/consumer';
   };
   if(!header){
-    path+='info'
+    path+='info';
   }
   return path;
 }
@@ -42,4 +47,3 @@ function Yyy(previousState = 0,action){
 export default combineReducers({
   user
 })
-//{user, xxx}
