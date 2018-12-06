@@ -1,17 +1,22 @@
 import React,{Component} from 'react';
 import {Route} from 'react-router-dom';
-import {NavBar} from 'antd-mobile'
+import {NavBar,Icon,Grid} from 'antd-mobile'
 import Bossinfo from '../../containers/boss-info';
 import Consumerinfo from '../../containers/consumer-info';
 import Cookies from 'js-cookie';
 import Boss from '../boss/boss';
-import Personal from '../../containers/personal';
 import Message from '../message';
-// import Personal from '../personal';
-import Footer from '../footer'
+import Personal from '../personal';
+import Footer from '../footer';
+import './index.less';
+import PropTypes from 'prop-types'
 import Consumer from '../consumer/cons';
 import {Redirect} from 'react-router-dom';
 class Main extends Component{
+  static propTypes={
+    user:PropTypes.object.isRequired,
+    getUser:PropTypes.func.isRequired,
+  }
   dataList = [
     {path:'/boss',text:'客人列表啊',img:'dashen',dis:'客人'},
     {path:'/consumer',text:'老板列表啊',img:'laoban',dis:'老板'},
@@ -20,10 +25,22 @@ class Main extends Component{
   ];
   render(){
     const userid = Cookies.get('userid');
+    const userDate = this.props.user;
+    //没有cookie，去登陆界面
     if(!userid){
       return <Redirect to='/login'/>
-    }
+    };
     const path = this.props.location.pathname;
+    //处理处理路径为‘/’时的问题
+    if(path === '/'){
+      return <Redirect to={this.props.user.redirectTo}/>
+    }
+    //有cookie，reducer中没有状态，获取reducer中的状态
+    if(!this.props.user.username){
+      this.props.getUser();
+      return <Icon type={'loading'} size={"lg"} className='loading'/>
+    }
+    //有cookie，reducer中有状态，直接只用reducer中的状态
     const item = this.dataList.find(item => path===item.path)
     return(
       <div>

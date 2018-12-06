@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux'
-import {AUTH_ASSCESS,AUTH_ERROR} from './action-list';
+import {AUTH_ASSCESS,AUTH_ERROR,UPDATE_USERINFO,RESET_USERINFO} from './action-list';
 
 const initState ={
   username: '',
@@ -19,7 +19,11 @@ function user(previousState = initState,action){
       // console.log(action.data)
       return {...action.data,redirectTo:getRedirectPath(action.data.type,action.data.header)};
     case AUTH_ERROR:
-      return {...initState,...action.data}
+      return {...initState,...action.data};
+    case UPDATE_USERINFO:
+      return {...action.data,redirectTo:getRedirectPath(action.data.type,action.data.header)};
+    case RESET_USERINFO:
+      return {...initState,...action.data};
     default:
       return previousState;
   }

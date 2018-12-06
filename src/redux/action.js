@@ -1,8 +1,10 @@
-import {AUTH_ASSCESS,AUTH_ERROR} from './action-list';
+import {AUTH_ASSCESS,AUTH_ERROR,UPDATE_USERINFO,RESET_USERINFO} from './action-list';
 
 import {reqRegister,reqLogin,reqUpdata,reqUser} from '../api';
 const authAsscess = (data)=> ({type:AUTH_ASSCESS,data:data});
 const authError = (data)=> ({type:AUTH_ERROR,data:data});
+const updateUserInfo = (data)=>({type:UPDATE_USERINFO,data:data});
+const resetUserInfo = (data)=>({type:RESET_USERINFO,data:data});
 
 //注册异步发送ajax请求
 export const register=({username, password, rePassword, type})=>{
@@ -87,19 +89,19 @@ export const updata = ({header,info,post,company,salary,type})=>{
 }
 
 //获取数据库中请求用户的信息
-export const getuser = () =>{
+export const getUser = () =>{
   return dispatch=>{
     reqUser()
       .then(({data})=>{
         if(data.code === 0){
           console.log(data.data)
-          dispatch(authAsscess(data.data))
+          dispatch(updateUserInfo(data.data))
         }else{
-          dispatch(authError({errMsg:data.data}))
+          dispatch(resetUserInfo({errMsg:data.data}))
         }
       })
       .catch(err =>{
-        dispatch(authError({errMsg:"网络不稳定，请刷新试试"}))
+        dispatch(resetUserInfo({errMsg:"网络不稳定，请刷新试试"}))
       })
   }
 }

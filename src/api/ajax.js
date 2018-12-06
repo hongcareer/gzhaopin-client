@@ -9,6 +9,7 @@ export default async function(url,data,method = 'GET'){
     // {username:xxx,
     // type:xxx
     // username=xxx&type=xxx}
+    //获取属性名到数组中
     const arr = Object.keys(data);
     arr.forEach(item=> {
       str += `${item}=${data[item]}&`;
