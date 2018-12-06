@@ -5,8 +5,9 @@ import {withRouter} from 'react-router-dom'
 import './index.less'
 const Item  = TabBar.Item
 class Footer extends Component{
-  static proptypes = {
-    dataList:PropTypes.array.isRequired
+  static propTypes = {
+    dataList:PropTypes.array.isRequired,
+    type:PropTypes.string.isRequired
   };
   //点击重定向
   redirectTo = (path)=>{
@@ -14,8 +15,8 @@ class Footer extends Component{
   }
   render(){
     //过滤传递多来的数据中path值为consumer数据,当type=boss时，过滤consumer
-    const type = 'boss';
-    const filter = type === 'boss' ? '/consumer' : '/boss';
+
+    const filter = this.props.type === 'boss' ? '/consumer' : '/boss';
     const dataList = this.props.dataList.filter(item=>item.path !== filter);
     return(
       <TabBar className='am-tab-bar'>

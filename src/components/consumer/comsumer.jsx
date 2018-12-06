@@ -7,7 +7,7 @@ class Comsumer extends Component{
     userList:PropTypes.array.isRequired,
   };
   componentDidMount(){
-    this.props.getUserList('consumer');
+    this.props.getUserList('boss');
   }
   render(){
     const userList = this.props.userList.filter(item=>item.header);

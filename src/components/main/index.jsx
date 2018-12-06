@@ -10,7 +10,7 @@ import Personal from '../personal';
 import Footer from '../footer';
 import './index.less';
 import PropTypes from 'prop-types'
-import Consumer from '../consumer/cons';
+import Consumer from '../../containers/consumer';
 import {Redirect} from 'react-router-dom';
 class Main extends Component{
   static propTypes={
@@ -48,12 +48,12 @@ class Main extends Component{
         <div className='margin-top'>
           <Route path='/bossinfo' component={Bossinfo}/>
           <Route path='/consumerinfo' component={Consumerinfo}/>
-          {/*<Route path='/consumer' component={Consumer}/>*/}
+          <Route path='/consumer' component={Consumer}/>
           <Route path='/boss' component={Boss}/>
           <Route path='/message' component={Message} />
           <Route path='/personal' component={Personal} />
         </div>
-        {item?<Footer dataList={this.dataList}/>:null }
+        {item?<Footer dataList={this.dataList} type={this.props.user.type}/>:null }
       </div>
     )
   }
