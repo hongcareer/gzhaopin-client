@@ -11,9 +11,9 @@ import {reqRegister,reqLogin,reqUpdata,reqUser,reqUserList} from '../api';
 const authAsscess = (data)=> ({type:AUTH_ASSCESS,data:data});
 const authError = (data)=> ({type:AUTH_ERROR,data:data});
 const updateUserInfo = (data)=>({type:UPDATE_USERINFO,data:data});
-const resetUserInfo = (data)=>({type:RESET_USERINFO,data:data});
+export const resetUserInfo = (data)=>({type:RESET_USERINFO,data:data});
 const updateUserList = (data)=>({type:UPDATE_USERLIST,data:data});
-const resetUserList = (data)=>({type:RESET_USERLIST,data:data});
+export const resetUserList = (data)=>({type:RESET_USERLIST,data:data});
 
 //注册异步发送ajax请求
 export const register=({username, password, rePassword, type})=>{
@@ -68,7 +68,7 @@ export const login=({username, password})=>{
   }
 };
 
-//保存用户信息到数据库
+//保存用户信息到数据库--完善用户信息的功能
 export const updata = ({header,info,post,company,salary,type})=>{
   if(!header){
     return authError({errMsg:'请选择头像'})

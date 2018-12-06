@@ -6,7 +6,7 @@ import Consumerinfo from '../../containers/consumer-info';
 import Cookies from 'js-cookie';
 import Boss from '../../containers/boss';
 import Message from '../message';
-import Personal from '../personal';
+import Personal from '../../containers/personal';
 import Footer from '../footer';
 import './index.less';
 import PropTypes from 'prop-types'

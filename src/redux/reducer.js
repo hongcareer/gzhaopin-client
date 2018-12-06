@@ -1,6 +1,12 @@
 import {combineReducers} from 'redux'
-import {AUTH_ASSCESS,AUTH_ERROR,UPDATE_USERINFO,RESET_USERINFO,UPDATE_USERLIST,RESET_USERLIST} from './action-list';
-
+import {
+  AUTH_ASSCESS,
+  AUTH_ERROR,
+  UPDATE_USERINFO,
+  RESET_USERINFO,
+  UPDATE_USERLIST,
+  RESET_USERLIST}
+  from './action-list';
 const initState ={
   username: '',
   _id: '',
@@ -40,6 +46,8 @@ function getRedirectPath(type,header){
   }
   return path;
 }
+
+
 const usersInitState = [];
 function userList(previousState = usersInitState,action){
   switch(action.type){
