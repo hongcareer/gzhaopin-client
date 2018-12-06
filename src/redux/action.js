@@ -1,10 +1,19 @@
-import {AUTH_ASSCESS,AUTH_ERROR,UPDATE_USERINFO,RESET_USERINFO} from './action-list';
+import {
+  AUTH_ASSCESS,
+  AUTH_ERROR,
+  UPDATE_USERINFO,
+  RESET_USERINFO,
+  UPDATE_USERLIST,
+  RESET_USERLIST}
+  from './action-list';
 
-import {reqRegister,reqLogin,reqUpdata,reqUser} from '../api';
+import {reqRegister,reqLogin,reqUpdata,reqUser,reqUserList} from '../api';
 const authAsscess = (data)=> ({type:AUTH_ASSCESS,data:data});
 const authError = (data)=> ({type:AUTH_ERROR,data:data});
 const updateUserInfo = (data)=>({type:UPDATE_USERINFO,data:data});
 const resetUserInfo = (data)=>({type:RESET_USERINFO,data:data});
+const updateUserList = (data)=>({type:UPDATE_USERLIST,data:data});
+const resetUserList = (data)=>({type:RESET_USERLIST,data:data});
 
 //注册异步发送ajax请求
 export const register=({username, password, rePassword, type})=>{
@@ -107,3 +116,18 @@ export const getUser = () =>{
 }
 
 //获取用户列表
+export const getUserList = type =>{
+  return dispatch=>{
+    reqUserList(type)
+      .then(({data})=>{
+        if(data.code === 0){
+          dispatch(updateUserList(data.data))
+        }else{
+          dispatch(resetUserList())
+        }
+      })
+      .catch(err =>{
+        dispatch(resetUserList())
+      })
+  }
+}

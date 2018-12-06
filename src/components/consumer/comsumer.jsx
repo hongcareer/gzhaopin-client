@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import {NavBar,WingBlank,WhiteSpace,Card} from 'antd-mobile';
 import PropTypes from 'prop-types';
-class Boss extends Component{
+class Comsumer extends Component{
   static propTypes = {
     getUserList:PropTypes.func.isRequired,
     userList:PropTypes.array.isRequired,
@@ -35,4 +35,4 @@ class Boss extends Component{
     )
   }
 };
-export default Boss;
+export default Comsumer;

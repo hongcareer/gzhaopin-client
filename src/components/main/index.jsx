@@ -4,7 +4,7 @@ import {NavBar,Icon,Grid} from 'antd-mobile'
 import Bossinfo from '../../containers/boss-info';
 import Consumerinfo from '../../containers/consumer-info';
 import Cookies from 'js-cookie';
-import Boss from '../boss/boss';
+import Boss from '../../containers/boss';
 import Message from '../message';
 import Personal from '../personal';
 import Footer from '../footer';
@@ -44,14 +44,16 @@ class Main extends Component{
     const item = this.dataList.find(item => path===item.path)
     return(
       <div>
-        {item?<NavBar>{item.text}</NavBar>:null}
-        <Route path='/bossinfo' component={Bossinfo}/>
-        <Route path='/consumerinfo' component={Consumerinfo}/>
-        {/*<Route path='/consumer' component={Consumer}/>*/}
-        <Route path='/boss' component={Boss}/>
-        <Route path='/message' component={Message} />
-        <Route path='/personal' component={Personal} />
-        {item?<Footer dataList={this.dataList}/>:null}
+        {item?<NavBar className='fixed'>{item.text}</NavBar>:null}
+        <div className='margin-top'>
+          <Route path='/bossinfo' component={Bossinfo}/>
+          <Route path='/consumerinfo' component={Consumerinfo}/>
+          {/*<Route path='/consumer' component={Consumer}/>*/}
+          <Route path='/boss' component={Boss}/>
+          <Route path='/message' component={Message} />
+          <Route path='/personal' component={Personal} />
+        </div>
+        {item?<Footer dataList={this.dataList}/>:null }
       </div>
     )
   }

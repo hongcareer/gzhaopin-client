@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux'
-import {AUTH_ASSCESS,AUTH_ERROR,UPDATE_USERINFO,RESET_USERINFO} from './action-list';
+import {AUTH_ASSCESS,AUTH_ERROR,UPDATE_USERINFO,RESET_USERINFO,UPDATE_USERLIST,RESET_USERLIST} from './action-list';
 
 const initState ={
   username: '',
@@ -40,14 +40,18 @@ function getRedirectPath(type,header){
   }
   return path;
 }
-function Yyy(previousState = 0,action){
+const usersInitState = [];
+function userList(previousState = usersInitState,action){
   switch(action.type){
-    // case 'YYYY':
-    //   return previousState;
+    case UPDATE_USERLIST:
+      return action.data;
+    case RESET_USERLIST:
+      return []
     default:
       return previousState;
   }
 };
 export default combineReducers({
-  user
+  user,
+  userList
 })
