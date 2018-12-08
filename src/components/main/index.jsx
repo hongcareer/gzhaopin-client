@@ -5,24 +5,29 @@ import Bossinfo from '../../containers/boss-info';
 import Consumerinfo from '../../containers/consumer-info';
 import Cookies from 'js-cookie';
 import Boss from '../../containers/boss';
-import Message from '../message';
+import Message from '../../containers/message';
 import Personal from '../../containers/personal';
 import Footer from '../footer';
 import './index.less';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import Consumer from '../../containers/consumer';
+import Chat from '../../containers/chat';
 import {Redirect} from 'react-router-dom';
 class Main extends Component{
   static propTypes={
     user:PropTypes.object.isRequired,
     getUser:PropTypes.func.isRequired,
-  }
+    getChatLists:PropTypes.func.isRequired
+  };
   dataList = [
     {path:'/boss',text:'客人列表啊',img:'dashen',dis:'客人'},
     {path:'/consumer',text:'老板列表啊',img:'laoban',dis:'老板'},
     {path:'/message',text:'消息列表啊',img:'message',dis:'消息'},
     {path:'/personal',text:'个人中心啊',img:'personal',dis:'个人'},
   ];
+  componentDidMount(){
+    this.props.getChatLists();
+  };
   render(){
     const userid = Cookies.get('userid');
     const userDate = this.props.user;
@@ -52,6 +57,7 @@ class Main extends Component{
           <Route path='/boss' component={Boss}/>
           <Route path='/message' component={Message} />
           <Route path='/personal' component={Personal} />
+          <Route path='/chat/:id' component={Chat}/>
         </div>
         {item?<Footer dataList={this.dataList} type={this.props.user.type}/>:null }
       </div>

@@ -8,7 +8,10 @@ class Boss extends Component{
   };
   componentDidMount(){
     this.props.getUserList('consumer');
-  }
+  };
+  goChat = (id)=>{
+    this.props.history.push(`/chat/${id}`)
+  };
   render(){
     const userList = this.props.userList.filter(item=>item.header);
     return(
@@ -16,7 +19,7 @@ class Boss extends Component{
         <WhiteSpace size="lg" />
 
         {userList.map((item,index)=>
-          <div key={index}>
+          <div key={index} onClick={this.goChat.bind(null,item._id)}>
             <Card>
               <Card.Header
                 thumb={require(`./images/头像${+item.header}.png`)}

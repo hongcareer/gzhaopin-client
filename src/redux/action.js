@@ -4,16 +4,23 @@ import {
   UPDATE_USERINFO,
   RESET_USERINFO,
   UPDATE_USERLIST,
-  RESET_USERLIST}
+  RESET_USERLIST,
+  GET_CHATLIST,
+  RESET_CHATLIST}
   from './action-list';
 
-import {reqRegister,reqLogin,reqUpdata,reqUser,reqUserList} from '../api';
+import {reqRegister,reqLogin,reqUpdata,reqUser,reqUserList,reqChatList} from '../api';
+import io from 'socket.io-client'
+
 const authAsscess = (data)=> ({type:AUTH_ASSCESS,data:data});
 const authError = (data)=> ({type:AUTH_ERROR,data:data});
 const updateUserInfo = (data)=>({type:UPDATE_USERINFO,data:data});
 export const resetUserInfo = (data)=>({type:RESET_USERINFO,data:data});
 const updateUserList = (data)=>({type:UPDATE_USERLIST,data:data});
 export const resetUserList = (data)=>({type:RESET_USERLIST,data:data});
+const getChatList = (data)=>({type:GET_CHATLIST,data:data});
+const resetChatList = (data)=>({type:RESET_CHATLIST,data:data});
+
 
 //注册异步发送ajax请求
 export const register=({username, password, rePassword, type})=>{
@@ -87,7 +94,6 @@ export const updata = ({header,info,post,company,salary,type})=>{
         if(data.code === 0){
           dispatch(authAsscess(data.data))
         }else{
-          console.log(authError({errMsg:data.msg}));
           dispatch(authError({errMsg:data.msg}))
         }
       })
@@ -103,7 +109,6 @@ export const getUser = () =>{
     reqUser()
       .then(({data})=>{
         if(data.code === 0){
-          console.log(data.data)
           dispatch(updateUserInfo(data.data))
         }else{
           dispatch(resetUserInfo({errMsg:data.data}))
@@ -128,6 +133,41 @@ export const getUserList = type =>{
       })
       .catch(err =>{
         dispatch(resetUserList())
+      })
+  }
+}
+
+//接受服务器的发过来的消息&发送消息给服务器
+const socket = io('ws://localhost:5000');
+//只接收一次服务器发送过来的消息
+socket.on('receiveMsg', function (data) {
+  console.log('浏览器端接收到消息:', data)
+});
+export const sendMessage = (message,from,to)=>{
+// 向服务器发送消息
+  return dispatch =>{
+    socket.emit('sendMsg', {message,from,to});
+    console.log('浏览器端向服务器发送消息:', {message,from,to})
+  }
+};
+
+//获取聊天列表
+
+export const getChatLists = ()=>{
+  return dispatch =>{
+    reqChatList()
+      .then(({data})=>{
+        if(data.code === 0){
+          console.log(data.data)
+          dispatch(getChatList(data.data))
+        }else{
+          console.log('err')
+          dispatch(resetChatList())
+        }
+
+      })
+      .catch(err =>{
+        dispatch(resetChatList());
       })
   }
 }

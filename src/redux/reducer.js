@@ -5,7 +5,9 @@ import {
   UPDATE_USERINFO,
   RESET_USERINFO,
   UPDATE_USERLIST,
-  RESET_USERLIST}
+  RESET_USERLIST,
+  GET_CHATLIST,
+  RESET_CHATLIST}
   from './action-list';
 const initState ={
   username: '',
@@ -59,7 +61,25 @@ function userList(previousState = usersInitState,action){
       return previousState;
   }
 };
+
+//获取用户聊天列表
+const initUserChatMessages = {
+  users:{},
+  chatMsgs:[]
+}
+function userChatList(previousState=initUserChatMessages,action){
+  switch (action.type) {
+    case GET_CHATLIST:
+      return action.data;
+    case RESET_CHATLIST:
+      console.log(111)
+      return initUserChatMessages;
+    default:
+      return previousState;
+  }
+}
 export default combineReducers({
   user,
-  userList
+  userList,
+  userChatList
 })

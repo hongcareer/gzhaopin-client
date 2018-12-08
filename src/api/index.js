@@ -9,3 +9,6 @@ export const reqUser = ()=>ajax(`${prefix}/user`);
 //获取用户列表
 export const reqUserList = type =>ajax(`${prefix}/userlist`,{type});
 
+//获取消息列表
+export const reqChatList = () =>ajax(`${prefix}/msglist`);
+

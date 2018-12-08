@@ -25,7 +25,6 @@ class Personal extends Component{
     ])
   };
   render(){
-
     const {username,type,info,salary,post,company,header,} = this.props.user;
     return(
       <div>
