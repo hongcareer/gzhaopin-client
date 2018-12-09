@@ -6,7 +6,8 @@ import {
   UPDATE_USERLIST,
   RESET_USERLIST,
   GET_CHATLIST,
-  RESET_CHATLIST}
+  RESET_CHATLIST,
+  UPDATE_CHATLIST}
   from './action-list';
 
 import {reqRegister,reqLogin,reqUpdata,reqUser,reqUserList,reqChatList} from '../api';
@@ -20,6 +21,7 @@ const updateUserList = (data)=>({type:UPDATE_USERLIST,data:data});
 export const resetUserList = (data)=>({type:RESET_USERLIST,data:data});
 const getChatList = (data)=>({type:GET_CHATLIST,data:data});
 const resetChatList = (data)=>({type:RESET_CHATLIST,data:data});
+const updateChatMessages = (data)=>({type:UPDATE_CHATLIST,data:data});
 
 
 //注册异步发送ajax请求
@@ -139,15 +141,21 @@ export const getUserList = type =>{
 
 //接受服务器的发过来的消息&发送消息给服务器
 const socket = io('ws://localhost:5000');
-//只接收一次服务器发送过来的消息
-socket.on('receiveMsg', function (data) {
-  console.log('浏览器端接收到消息:', data)
-});
+
 export const sendMessage = (message,from,to)=>{
 // 向服务器发送消息
   return dispatch =>{
     socket.emit('sendMsg', {message,from,to});
     console.log('浏览器端向服务器发送消息:', {message,from,to})
+    //只接收一次服务器发送过来的消息
+    if (!socket.isFirst) {
+      socket.isFirst = true;
+      socket.on('receiveMsg', function (data) {
+        console.log('浏览器端接收到服务器发送的消息:', data);
+        //只有拿到dispatch方法才能更新数据
+        dispatch(updateChatMessages(data))
+      })
+    }
   }
 };
 
@@ -170,3 +178,4 @@ export const getChatLists = ()=>{
       })
   }
 }
+

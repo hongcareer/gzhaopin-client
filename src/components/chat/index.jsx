@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {NavBar, List, InputItem,Icon} from 'antd-mobile'
+import {NavBar, List, InputItem,Icon,Grid} from 'antd-mobile'
 import './index.less';
 import Cookies from 'js-cookie';
 import PropTypes from 'prop-types';
@@ -11,7 +11,8 @@ export default class Chat extends Component {
     userChatList:PropTypes.object.isRequired
   }
   state={
-    message:''
+    message:'',
+    isShow:false
   }
   goBack = ()=>{
     this.props.history.goBack()
@@ -20,6 +21,18 @@ export default class Chat extends Component {
     this.setState({
       message:val
     });
+  };
+  toggleShow = () => {
+    const {isShow} = this.state;
+    this.setState({
+      isShow: !isShow
+    })
+    //解决轮播图显示高度异常的问题
+    if (!isShow) {
+      setTimeout(function () {
+        window.dispatchEvent(new Event('resize'));
+      }, 0)
+    }
   }
   sendMessages = ()=>{
     const {message} = this.state;
@@ -28,7 +41,21 @@ export default class Chat extends Component {
     this.props.sendMessage(message,from,to);
     this.setState({
       message:''
-    })
+    });
+  };
+  componentDidMount(){
+    window.scrollTo(0, document.body.offsetHeight);
+  };
+  componentDidUpdate(){
+    window.scrollTo(0, document.body.offsetHeight);
+  };
+  componentWillMount () {
+    const emojis =['😁', '😁', '😁','😁', '😁', '😁','😁', '😁',
+      '😁', '😁', '😁','😁', '😁', '😁','😁', '😁',
+      '😁', '😁', '😁','😁', '😁', '😁','😁', '😁',
+      '😁', '😁', '😁','😁', '😁', '😁','😁', '😁','🙉'];
+
+    this.emojis = emojis.map(item => ({text: item}));
   }
   render() {
     const {users,chatMsgs} = this.props.userChatList;
@@ -50,30 +77,43 @@ export default class Chat extends Component {
     return (
       <div id='chat-page' className='chat-page'>
         <NavBar icon={<Icon type="left" onClick={this.goBack} />}>aa</NavBar>
-        {currMsgs.map((item,index)=>{
+        <List style={{marginTop: '96px'}}>
+          {currMsgs.map((item,index)=>{
           if(item.from === from){
             return (
-              <List key={index}>
-                <Item className='chat-me' extra='我'>{item.message}</Item>
-              </List>
+              <Item className='chat-me' extra='我' key={index}>{item.message}</Item>
             )
           }else{
             return(
-              <List key={index}>
-                <Item thumb={require(`../../assets/images/头像${others.header}.png`)}>{item.message}</Item>
-              </List>
+              <Item thumb={require(`../../assets/images/头像${others.header}.png`) } key={index}>{item.message}</Item>
             )
           }
         })}
+        </List>
+        <div style={{height: this.state.isShow ? '180px' : 0}}></div>
         <div className='am-tab-bar chat-bottom'>
           <InputItem
             placeholder="请输入"
             extra={
-              <span onClick={this.sendMessages}>发送</span>
+              <div>
+                <span onClick={this.toggleShow}>🙉</span>&nbsp;&nbsp;
+                <span onClick={this.sendMessages}>发送</span>
+              </div>
             }
             onChange={this.getMessageValue}
             value={this.state.message}
           />
+          {
+            this.state.isShow
+              ? <Grid
+                data={this.emojis}
+                isCarousel
+                columnNum={8}
+                carouselMaxRow={4}
+                onClick={el => {this.setState({message: this.state.message + el.text})}}
+              />
+              : null
+          }
         </div>
       </div>
     )

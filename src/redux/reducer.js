@@ -7,7 +7,8 @@ import {
   UPDATE_USERLIST,
   RESET_USERLIST,
   GET_CHATLIST,
-  RESET_CHATLIST}
+  RESET_CHATLIST,
+  UPDATE_CHATLIST}
   from './action-list';
 const initState ={
   username: '',
@@ -72,8 +73,12 @@ function userChatList(previousState=initUserChatMessages,action){
     case GET_CHATLIST:
       return action.data;
     case RESET_CHATLIST:
-      console.log(111)
       return initUserChatMessages;
+    case UPDATE_CHATLIST:
+      return {
+        users: previousState.users,
+        chatMsgs: [...previousState.chatMsgs, action.data]
+      };
     default:
       return previousState;
   }

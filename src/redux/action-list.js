@@ -6,3 +6,4 @@ export const UPDATE_USERLIST = 'updateUserList';
 export const RESET_USERLIST = 'resetUserList';
 export const GET_CHATLIST = 'getChatList';
 export const RESET_CHATLIST = 'resetChatList';
+export const UPDATE_CHATLIST = 'updateChatList';
