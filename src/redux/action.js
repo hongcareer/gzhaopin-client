@@ -152,7 +152,6 @@ export const sendMessage = (message,from,to)=>{
 };
 
 //获取聊天列表
-
 export const getChatLists = ()=>{
   return dispatch =>{
     reqChatList()

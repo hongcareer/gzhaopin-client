@@ -16,22 +16,20 @@ class Message extends Component{
   render(){
     const userid = Cookies.get('userid');
     const {users,chatMsgs} = this.props.userChatList;
+    console.log(users,chatMsgs);
     if(!chatMsgs.length){
       return null;
     }
     let users_id={};
     //过滤相同的id值
     chatMsgs.forEach((item,index)=>{
-      // console.log(item.from,userid,item.to)
       const othersId = item.from === userid? item.to: item.from;
-      // console.log(users)
       //保证users_id对象中有且值保存一份其他用户id和对应的值
       //将users中对应的属性名中对应的属性值，放在othersId中
       users_id[othersId] = users[othersId];
-      console.log(users)
-      console.log(users[othersId]);
       //设置id值
       users_id[othersId].id = othersId;
+      // console.log(users_id)
       //展示最新的消息
       const time = Date.parse(item.createTime);
       if(users_id[othersId].time){
@@ -46,7 +44,6 @@ class Message extends Component{
     });
     const inneedChat = Object.values(users_id);
     return(
-
       <List>
         {inneedChat.map((item,index)=>(
           <Item key={index}
