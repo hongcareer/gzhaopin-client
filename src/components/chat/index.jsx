@@ -27,7 +27,7 @@ export default class Chat extends Component {
     this.setState({
       isShow: !isShow
     })
-    //解决轮播图显示高度异常的问题
+    // 解决轮播图显示高度异常的问题
     if (!isShow) {
       setTimeout(function () {
         window.dispatchEvent(new Event('resize'));
@@ -50,16 +50,15 @@ export default class Chat extends Component {
     window.scrollTo(0, document.body.offsetHeight);
   };
   componentWillMount () {
-    const emojis =['😁', '😁', '😁','😁', '😁', '😁','😁', '😁',
+    const emojis = ['😁', '😁', '😁','😁', '😁', '😁','😁', '😁',
       '😁', '😁', '😁','😁', '😁', '😁','😁', '😁',
       '😁', '😁', '😁','😁', '😁', '😁','😁', '😁',
       '😁', '😁', '😁','😁', '😁', '😁','😁', '😁','🙉'];
-
     this.emojis = emojis.map(item => ({text: item}));
-  }
+  };
   render() {
     const {users,chatMsgs} = this.props.userChatList;
-    console.log(users,chatMsgs)
+    // console.log(users,chatMsgs)
     const from = Cookies.get('userid');
     const to = this.props.match.params.id;
     const others = users[to];
@@ -75,23 +74,32 @@ export default class Chat extends Component {
       return Date.parse(a.createTime) - Date.parse(b.createTime)
     });
     return (
-      <div id='chat-page' className='chat-page'>
-        <NavBar icon={<Icon type="left" onClick={this.goBack} />}>aa</NavBar>
+      <div id='chat-page'>
+        <NavBar style={{position: 'fixed', left: 0, top: 0, zIndex: 50, width: '100%'}} icon={<Icon type="left" onClick={this.goBack}/>}>{others.username}</NavBar>
         <List style={{marginTop: '96px'}}>
           {currMsgs.map((item,index)=>{
           if(item.from === from){
             return (
-              <Item className='chat-me' extra='我' key={index}>{item.message}</Item>
+              <Item
+                className='chat-me'
+                extra='我'
+                key={index}
+              >{item.message}</Item>
             )
           }else{
             return(
-              <Item thumb={require(`../../assets/images/头像${others.header}.png`) } key={index}>{item.message}</Item>
+              <Item
+                thumb={require(`../../assets/images/头像${others.header}.png`) }
+                key={index}
+              >
+                {item.message}
+              </Item>
             )
           }
         })}
         </List>
         <div style={{height: this.state.isShow ? '180px' : 0}}></div>
-        <div className='am-tab-bar chat-bottom'>
+        <div className='am-tab-bar'>
           <InputItem
             placeholder="请输入"
             extra={
